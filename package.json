@@ -5,6 +5,9 @@
   "repository": "git@github.com:brunohsweber/the-shortest-url.git",
   "author": "brunohsweber <contato@brunoweber.com.br>",
   "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev -r tsconfig-paths/register --poll --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts"
+  },
   "dependencies": {
     "express": "^4.17.3",
     "express-async-errors": "^3.1.1"
