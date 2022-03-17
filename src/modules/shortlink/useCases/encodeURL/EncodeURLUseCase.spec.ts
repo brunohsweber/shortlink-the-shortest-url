@@ -1,5 +1,6 @@
 import { UrlsRepositoryInMemory } from "@modules/shortlink/repositories/in-memory/UrlsRepositoryInMemory";
 import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
+import { AppError } from "@shared/errors/AppError";
 import { EncodeURLUseCase } from "./EncodeURLUseCase";
 
 let urlsRepositoryInMemory: UrlsRepositoryInMemory;
@@ -19,6 +20,12 @@ describe("Encode URL", () => {
     expect(typeof result).toBe("string")
   });
 
-  it("should not be able ")
+  it("should not be able to shorten an invalid url", async () => {
+    expect(async () => {
+      const result = await encodeURLUseCase.execute("batatinhafrita123")
+
+      return result
+    }).rejects.toBeInstanceOf(AppError);
+  })
 
 })

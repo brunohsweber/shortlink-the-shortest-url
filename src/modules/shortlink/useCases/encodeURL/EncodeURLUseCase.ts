@@ -10,8 +10,6 @@ class EncodeURLUseCase {
 
     let short_url = "http://localhost:3000/" + await generateCode.get();
 
-    console.log(short_url)
-
     return short_url;
   }
 }
