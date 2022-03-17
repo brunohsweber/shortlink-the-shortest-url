@@ -1,6 +1,6 @@
 interface IUrlsRepository {
-  encode(url: string): Promise<String>;
-  decode(url: string): Promise<String | undefined>;
+  encode(url, short_url: String): Promise<String>;
+  decode(short_url: string): Promise<String | undefined>;
 }
 
 export { IUrlsRepository };

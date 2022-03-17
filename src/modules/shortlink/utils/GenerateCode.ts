@@ -6,7 +6,7 @@ class GenerateCode {
     this.code = "";
   }
 
-  public async execute(): Promise<string> {
+  public async get(): Promise<string> {
 
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
