@@ -6,7 +6,8 @@
   "author": "brunohsweber <contato@brunoweber.com.br>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --poll --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts"
+    "dev": "ts-node-dev -r tsconfig-paths/register --poll --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
+    "test": "jest"
   },
   "dependencies": {
     "@prisma/client": "^3.11.0",
