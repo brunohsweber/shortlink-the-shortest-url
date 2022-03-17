@@ -1,6 +1,6 @@
 interface IUrlsRepository {
-  create(data: IEncodeUrlDTO): Promise<void>;
-  findByUrl(url: string): Promise<void | undefined>;
+  encode(url: string): Promise<String>;
+  decode(url: string): Promise<String | undefined>;
 }
 
 export { IUrlsRepository };

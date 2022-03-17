@@ -1,5 +1,6 @@
 class EncodeURLUseCase {
-  async execute(url: string): Promise<string> {
+  async execute(url: string): Promise<String> {
+
     return url;
   }
 }

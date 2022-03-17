@@ -1,3 +1,0 @@
-interface IEncodeUrlDTO {
-  url: string;
-}

@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  database:
+    # ESSE É O NOME DO SERVICE QUE DEVE ESTAR NO ARQUIVO DE CRIAÇÃO DE CONEXÃO
+    image: mysql
+    container_name: db_shortlink-the-shortest-url
+    restart: always
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecretpassword
+      - MYSQL_DATABASE=shortlink-the-shortest-url
+      - MYSQL_USER=going2
+      - MYSQL_PASSWORD=123456
+    volumes:
+      - mysqldata:/data/mysql
+
+volumes:
+  mysqldata:
+    driver: local

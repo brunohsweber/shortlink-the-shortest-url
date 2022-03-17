@@ -1,10 +1,10 @@
 import { IUrlsRepository } from "../IUrlsRepository";
 
 class UrlsRepositoryInMemory implements IUrlsRepository {
-  create(data: IEncodeUrlDTO): Promise<void> {
+  encode(url: string): Promise<String> {
     throw new Error("Method not implemented.");
   }
-  findByUrl(url: string): Promise<void> {
+  decode(url: string): Promise<String> {
     throw new Error("Method not implemented.");
   }
 
