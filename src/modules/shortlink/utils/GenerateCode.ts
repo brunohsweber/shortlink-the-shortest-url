@@ -1,0 +1,5 @@
+class GenerateCode {
+
+}
+
+export { GenerateCode };
