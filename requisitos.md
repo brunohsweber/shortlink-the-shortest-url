@@ -1,7 +1,7 @@
 ## Requisitos Funcionais
-- [ ] Codificar um URL para um URL abreviado.
-- [ ] Decodificar um URL encurtado para seu URL original.
-- [ ] 
+- [ ] Codificar um URL válido para um URL encurtado e devolver para o client este URL encurtado
+- [ ] Salvar a URL original e abreviada no banco de dados (Campos: UUID, original_link - unique, short_link - unique, created_at)
+- [ ] Decodificar um URL encurtado para seu URL original de acordo com o banco de dados e devolve-la para o client
 
 ## Requisitos Não Funcionais
 - [] Node.js - Back-end
@@ -11,9 +11,17 @@
 - [] MySQL - Banco de dados relacional
 - [] Jest - Para testes unitários
 - [] Supertest - Para testes de integração
+- [] Swagger - Para documentação da API
 
 ## Regras de Negócio
-- [] Deve ser possível fazer o encode para encurtar uma URL
-- [] Não deve ser possível fazer o encode de uma url inválida
-- [] Deve ser possível fazer o decode do url encurtado para o url original
-- [] Não deve ser possível fazer o decode de uma URL inválida
+
+### Encode
+- [] Deve ser possível fazer o encode de uma URL para encurtar-la
+- [] Deve ser possível salvar o short link no BD (UUID, original_link - unique, short_link - unique, created_at)
+- [] Não deve ser possível fazer o encode de uma URL inválida - Caso seja inválida, lançar erro 400
+- [] Não deve ser possível salvar URL iguais. Caso já exista a URL encurtada no BD, gerar nova URL encurtada até ser única. (loop)
+
+### Decode
+- [] Deve ser possível fazer o decode do URL encurtado para o URL original, buscando no banco de dados
+- [] Caso não tenha a URL encurtada no banco de dados, lançar erro 404.
+
