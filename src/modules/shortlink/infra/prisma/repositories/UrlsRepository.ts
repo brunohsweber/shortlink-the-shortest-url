@@ -14,12 +14,10 @@ class UrlsRepository implements IUrlsRepository {
 
     const generateCode = new GenerateCode();
 
-    const shortUrl = await generateCode.get();
-
     const result = await this.repository.create({
       data: {
         url: url,
-        short_url: shortUrl
+        short_url: await generateCode.get()
       }
     })
 

@@ -1,4 +1,6 @@
+import { Url } from "@modules/shortlink/infra/prisma/entities/Url";
 import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
+import { Urls } from "@prisma/client";
 import { IUrlsRepository } from "../IUrlsRepository";
 
 class UrlsRepositoryInMemory implements IUrlsRepository {

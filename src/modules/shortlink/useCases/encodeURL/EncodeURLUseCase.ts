@@ -8,7 +8,9 @@ class EncodeURLUseCase {
 
     const generateCode = new GenerateCode();
 
-    const short_url = await generateCode.get();
+    let short_url = "http://localhost:3000/" + await generateCode.get();
+
+    console.log(short_url)
 
     return short_url;
   }
