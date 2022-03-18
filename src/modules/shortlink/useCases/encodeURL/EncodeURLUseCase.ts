@@ -3,6 +3,8 @@ import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
 import { UrlValidation } from "@modules/shortlink/utils/UrlValidation";
 import { AppError } from "@shared/errors/AppError";
 import { prisma } from "@shared/infra/prisma/prismaClient";
+import { InvalidURLError } from "./InvalidURLError";
+import { URLAlreadyEncodedError } from "./URLAlreadyEncodedError";
 
 class EncodeURLUseCase {
 
@@ -18,7 +20,11 @@ class EncodeURLUseCase {
 
     const isValidUrl = await this.urlValidation.validate(url);
 
-    if (!isValidUrl) throw new AppError("Invalid URL");
+    if (!isValidUrl) throw new InvalidURLError();
+
+    const urlExists = await prisma.urls.findFirst({ where: { url } });
+
+    if (urlExists) throw new URLAlreadyEncodedError();
 
     const encodedUrl = `http://localhost:3000/${await this.generateCode.get()}`;
 

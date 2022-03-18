@@ -2,6 +2,7 @@ import { UrlsRepositoryInMemory } from "@modules/shortlink/repositories/in-memor
 import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
 import { AppError } from "@shared/errors/AppError";
 import { EncodeURLUseCase } from "./EncodeURLUseCase";
+import { URLAlreadyEncodedError } from "./URLAlreadyEncodedError";
 
 let urlsRepositoryInMemory: UrlsRepositoryInMemory;
 let encodeURLUseCase: EncodeURLUseCase;
@@ -39,7 +40,7 @@ describe("Encode URL", () => {
     expect(async () => {
       await encodeURLUseCase.execute("http://test.com/1")
       await encodeURLUseCase.execute("http://test.com/1")
-    }).rejects.toBeInstanceOf(AppError);
+    }).rejects.toBeInstanceOf(URLAlreadyEncodedError).
   })
 
   it("should not be able to shorten an invalid URL", async () => {
