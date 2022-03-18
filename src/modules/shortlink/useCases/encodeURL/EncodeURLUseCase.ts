@@ -24,7 +24,9 @@ class EncodeURLUseCase {
 
     const urlAlreadyExist = await this.urlsRepository.findByUrl(url)
 
-    const encodeURL = (shortUrl: String) => `http://localhost:3000/${shortUrl}`;
+    const HOST = process.env.HOST || "http://localhost:3000"
+
+    const encodeURL = (shortUrl: String) => `${HOST}/${shortUrl}`
 
     if (!urlAlreadyExist) {
 

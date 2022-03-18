@@ -9,9 +9,9 @@ class EncodeURLController {
 
     const encodeURLUseCase = container.resolve(EncodeURLUseCase);
 
-    const result = await encodeURLUseCase.execute(url);
+    const urlEncoded = await encodeURLUseCase.execute(url);
 
-    return response.status(200).json(result);
+    return response.status(200).json({ urlEncoded });
   }
 }
 
