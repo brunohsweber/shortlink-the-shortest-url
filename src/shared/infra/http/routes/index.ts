@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import { encodeRoutes } from "./encode.routes";
+import { encodeURLRoutes } from "./encodeURL.routes";
 
 const router = Router();
 
-router.use("/encode", encodeRoutes);
+router.use("/encode", encodeURLRoutes);
 
 export { router };
