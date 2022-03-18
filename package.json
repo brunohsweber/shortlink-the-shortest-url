@@ -2,7 +2,6 @@
   "name": "shortlink-the-shortest-url",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:brunohsweber/shortlink-the-shortest-url.git",
   "author": "brunohsweber <contato@brunoweber.com.br>",
   "license": "MIT",
   "scripts": {
