@@ -3,7 +3,6 @@ import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
 import { UrlValidation } from "@modules/shortlink/utils/UrlValidation";
 import { AppError } from "@shared/errors/AppError";
 import { EncodeURLUseCase } from "./EncodeURLUseCase";
-import { URLAlreadyEncodedError } from "./URLAlreadyEncodedError";
 
 let urlsRepositoryInMemory: UrlsRepositoryInMemory;
 let urlValidation: UrlValidation;

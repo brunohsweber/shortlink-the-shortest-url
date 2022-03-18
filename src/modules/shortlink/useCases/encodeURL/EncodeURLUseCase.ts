@@ -3,7 +3,6 @@ import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
 import { UrlValidation } from "@modules/shortlink/utils/UrlValidation";
 import { inject, injectable } from "tsyringe";
 import { InvalidURLError } from "./InvalidURLError";
-import { URLAlreadyEncodedError } from "./URLAlreadyEncodedError";
 
 @injectable()
 class EncodeURLUseCase {
