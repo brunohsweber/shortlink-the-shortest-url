@@ -23,9 +23,11 @@ class EncodeURLUseCase {
 
     if (!isValidUrl) throw new InvalidURLError();
 
-    const urlExists = await this.urlsRepository.findByUrl(url);
+    const shortUrlFound = await this.urlsRepository.findByUrl(url);
 
-    if (urlExists) throw new URLAlreadyEncodedError();
+    if (shortUrlFound) {
+      return shortUrlFound
+    }
 
     const encodedUrl = `http://localhost:3000/${await this.generateCode.get()}`;
 

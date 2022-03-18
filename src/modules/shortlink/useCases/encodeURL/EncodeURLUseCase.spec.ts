@@ -45,17 +45,24 @@ describe("Encode URL", () => {
     expect(encode.length).toBe(5);
   });
 
-
   it("should not be able to re-encode a url that has already been encoded", async () => {
     expect(async () => {
 
       const url = "http://www.google.com"
 
-      const result1 = await encodeURLUseCase.execute(url)
-      console.log(result1)
+      await encodeURLUseCase.execute(url)
+      await encodeURLUseCase.execute(url)
 
-      const result2 = await encodeURLUseCase.execute(url)
-      console.log(result2)
+    }).rejects.toBeInstanceOf(URLAlreadyEncodedError);
+  })
+
+  it("should be able to return a url that has already been encoded", async () => {
+    expect(async () => {
+
+      const url = "http://www.google.com"
+
+      await encodeURLUseCase.execute(url)
+      await encodeURLUseCase.execute(url)
 
     }).rejects.toBeInstanceOf(URLAlreadyEncodedError);
   })
