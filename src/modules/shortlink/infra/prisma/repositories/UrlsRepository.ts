@@ -19,7 +19,7 @@ class UrlsRepository implements IUrlsRepository {
     return result.short_url
   }
 
-  public async findByShortUrl(shortUrl: string): Promise<String | undefined> {
+  public async findByShortUrl(shortUrl: string): Promise<IUrlDTO | undefined> {
     const result = await this.repository.findFirst({
       where: {
         short_url: {
@@ -28,10 +28,10 @@ class UrlsRepository implements IUrlsRepository {
       }
     })
 
-    return result.url
+    return result
   }
 
-  public async findByUrl(url: string): Promise<String | undefined> {
+  public async findByUrl(url: string): Promise<IUrlDTO | undefined> {
     const result = await this.repository.findFirst({
       where: {
         url: {
@@ -40,7 +40,7 @@ class UrlsRepository implements IUrlsRepository {
       }
     })
 
-    return result.short_url
+    return result
   }
 }
 

@@ -22,11 +22,7 @@ class EncodeURLUseCase {
 
     if (!isValidUrl) throw new InvalidURLError();
 
-    //const urlAlreadyExist = await this.urlsRepository.findByUrl(url)
-
-    console.log("chegou aqui")
-
-    /*
+    const urlAlreadyExist = await this.urlsRepository.findByUrl(url)
 
     const encodeURL = (shortUrl: String) => `http://localhost:3000/${shortUrl}`;
 
@@ -41,11 +37,11 @@ class EncodeURLUseCase {
       return urlEncoded;
     }
 
-    const urlEncoded = encodeURL(urlAlreadyExist);
+    const urlEncoded = encodeURL(urlAlreadyExist.short_url);
 
     return urlEncoded;
 
-    */
+
   }
 }
 
