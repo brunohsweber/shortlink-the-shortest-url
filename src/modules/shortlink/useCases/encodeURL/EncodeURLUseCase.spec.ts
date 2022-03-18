@@ -1,16 +1,25 @@
 import { UrlsRepositoryInMemory } from "@modules/shortlink/repositories/in-memory/UrlsRepositoryInMemory";
 import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
+import { UrlValidation } from "@modules/shortlink/utils/UrlValidation";
 import { AppError } from "@shared/errors/AppError";
 import { EncodeURLUseCase } from "./EncodeURLUseCase";
 import { URLAlreadyEncodedError } from "./URLAlreadyEncodedError";
 
 let urlsRepositoryInMemory: UrlsRepositoryInMemory;
+let urlValidation: UrlValidation;
+let generateCode: GenerateCode;
 let encodeURLUseCase: EncodeURLUseCase;
 
 describe("Encode URL", () => {
   beforeEach(() => {
-    urlsRepositoryInMemory = new UrlsRepositoryInMemory();
-    encodeURLUseCase = new EncodeURLUseCase(urlsRepositoryInMemory);
+    urlValidation = new UrlValidation();
+    generateCode = new GenerateCode();
+    urlsRepositoryInMemory = new UrlsRepositoryInMemory(generateCode);
+    encodeURLUseCase = new EncodeURLUseCase(
+      urlValidation,
+      generateCode,
+      urlsRepositoryInMemory
+    );
   })
 
   it("should be able encode an URL", async () => {
@@ -36,10 +45,15 @@ describe("Encode URL", () => {
     expect(encode.length).toBe(5);
   });
 
+
   it("should not be able to re-encode a url that has already been encoded", async () => {
+
+    const url = "http://www.google.com"
+
+    await encodeURLUseCase.execute(url)
+
     expect(async () => {
-      await encodeURLUseCase.execute("http://www.test.com/1")
-      await encodeURLUseCase.execute("http://www.test.com/1")
+      return await encodeURLUseCase.execute(url)
     }).rejects.toBeInstanceOf(URLAlreadyEncodedError);
   })
 

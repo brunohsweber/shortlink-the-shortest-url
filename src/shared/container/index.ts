@@ -1,6 +1,7 @@
 import { UrlsRepository } from "@modules/shortlink/infra/prisma/repositories/UrlsRepository";
-import { UrlsRepositoryInMemory } from "@modules/shortlink/repositories/in-memory/UrlsRepositoryInMemory";
 import { IUrlsRepository } from "@modules/shortlink/repositories/IUrlsRepository";
+import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
+import { UrlValidation } from "@modules/shortlink/utils/UrlValidation";
 import { container } from "tsyringe";
 
 container.registerSingleton<IUrlsRepository>(
@@ -8,7 +9,12 @@ container.registerSingleton<IUrlsRepository>(
   UrlsRepository
 )
 
-container.registerSingleton<IUrlsRepository>(
-  "UrlsRepositoryInMemory",
-  UrlsRepositoryInMemory
+container.registerSingleton<GenerateCode>(
+  "GenerateCode",
+  GenerateCode
+)
+
+container.registerSingleton<UrlValidation>(
+  "UrlValidation",
+  UrlValidation
 )

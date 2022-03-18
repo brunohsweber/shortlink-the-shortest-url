@@ -1,20 +1,21 @@
-
+import { IUrlsRepository } from "@modules/shortlink/repositories/IUrlsRepository";
 import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
 import { UrlValidation } from "@modules/shortlink/utils/UrlValidation";
-import { AppError } from "@shared/errors/AppError";
-import { prisma } from "@shared/infra/prisma/prismaClient";
+import { inject, injectable } from "tsyringe";
 import { InvalidURLError } from "./InvalidURLError";
 import { URLAlreadyEncodedError } from "./URLAlreadyEncodedError";
 
+@injectable()
 class EncodeURLUseCase {
 
-  private urlValidation: UrlValidation;
-  private generateCode: GenerateCode;
-
-  constructor() {
-    this.urlValidation = new UrlValidation()
-    this.generateCode = new GenerateCode()
-  }
+  constructor(
+    @inject("UrlValidation")
+    private urlValidation: UrlValidation,
+    @inject("GenerateCode")
+    private generateCode: GenerateCode,
+    @inject("UrlsRepository")
+    private urlsRepository: IUrlsRepository
+  ) { }
 
   public async execute(url: string): Promise<String> {
 
@@ -22,7 +23,7 @@ class EncodeURLUseCase {
 
     if (!isValidUrl) throw new InvalidURLError();
 
-    const urlExists = await prisma.urls.findFirst({ where: { url } });
+    const urlExists = await this.urlsRepository.findByUrl(url);
 
     if (urlExists) throw new URLAlreadyEncodedError();
 

@@ -1,18 +1,22 @@
 import { Url } from "@modules/shortlink/infra/prisma/entities/Url";
 import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
-import { Urls } from "@prisma/client";
+import { inject, injectable } from "tsyringe";
 import { IUrlsRepository } from "../IUrlsRepository";
 
+@injectable()
 class UrlsRepositoryInMemory implements IUrlsRepository {
 
   urls = []
 
+  constructor(
+    @inject("GenerateCode")
+    private generateCode: GenerateCode
+  ) { }
+
   public async encode(url: string): Promise<String> {
     const urlObj = {}
 
-    const generateCode = new GenerateCode();
-
-    const shortUrl = await generateCode.get();
+    const shortUrl = this.generateCode.get();
 
     Object.assign(urlObj, {
       url,
@@ -21,7 +25,13 @@ class UrlsRepositoryInMemory implements IUrlsRepository {
 
     this.urls.push(urlObj)
 
-    return shortUrl;
+    return this.urls[this.urls.length - 1].short_url
+  }
+
+  public async findByUrl(url: string): Promise<String | undefined> {
+    const urlObj = this.urls.find(urlObj => urlObj.url === url)
+
+    return urlObj?.short_url
   }
 
   public async decode(url: string): Promise<String> {
