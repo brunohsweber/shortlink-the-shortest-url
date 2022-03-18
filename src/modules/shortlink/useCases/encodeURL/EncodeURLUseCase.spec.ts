@@ -21,6 +21,10 @@ describe("Encode URL", () => {
     );
   })
 
+  it("should be defined", () => {
+    expect(EncodeURLUseCase).toBeDefined();
+  });
+
   it("should be able encode an URL", async () => {
 
     const encodedURL = await encodeURLUseCase.execute("http://www.google.com")
