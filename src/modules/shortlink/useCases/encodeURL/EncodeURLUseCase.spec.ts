@@ -10,7 +10,7 @@ let encodeURLUseCase: EncodeURLUseCase;
 describe("Encode URL", () => {
   beforeEach(() => {
     urlsRepositoryInMemory = new UrlsRepositoryInMemory();
-    encodeURLUseCase = new EncodeURLUseCase();
+    encodeURLUseCase = new EncodeURLUseCase(urlsRepositoryInMemory);
   })
 
   it("should be able encode an URL", async () => {
@@ -38,9 +38,9 @@ describe("Encode URL", () => {
 
   it("should not be able to re-encode a url that has already been encoded", async () => {
     expect(async () => {
-      await encodeURLUseCase.execute("http://test.com/1")
-      await encodeURLUseCase.execute("http://test.com/1")
-    }).rejects.toBeInstanceOf(URLAlreadyEncodedError).
+      await encodeURLUseCase.execute("http://www.test.com/1")
+      await encodeURLUseCase.execute("http://www.test.com/1")
+    }).rejects.toBeInstanceOf(URLAlreadyEncodedError);
   })
 
   it("should not be able to shorten an invalid URL", async () => {
