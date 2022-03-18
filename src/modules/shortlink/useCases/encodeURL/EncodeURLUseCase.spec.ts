@@ -22,9 +22,11 @@ describe("Encode URL", () => {
 
   it("should not be able to shorten an invalid url", async () => {
     expect(async () => {
-      const result = await encodeURLUseCase.execute("batatinhafrita123")
+      await encodeURLUseCase.execute("batatinhafrita123")
+    }).rejects.toBeInstanceOf(AppError);
 
-      return result
+    expect(async () => {
+      await encodeURLUseCase.execute("https://www.google,com")
     }).rejects.toBeInstanceOf(AppError);
   })
 
