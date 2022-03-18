@@ -45,23 +45,13 @@ describe("Encode URL", () => {
   });
 
 
-  it("should not be able to re-encode a url that has already been encoded", async () => {
+  it("should be able to return the short url of a url that has already been saved", async () => {
     const url = "http://www.google.com"
 
     const result1 = await encodeURLUseCase.execute(url)
     const result2 = await encodeURLUseCase.execute(url)
 
     expect(result2).toEqual(result1)
-  })
-
-  it("should be able to return the short url of a url that has already been encoded", async () => {
-
-    const url = "http://www.google.com"
-
-    const result1 = await encodeURLUseCase.execute(url)
-    const result2 = await encodeURLUseCase.execute(url)
-
-    expect(result2).toStrictEqual(result1)
   })
 
   it("should not be able to shorten an invalid URL", async () => {
