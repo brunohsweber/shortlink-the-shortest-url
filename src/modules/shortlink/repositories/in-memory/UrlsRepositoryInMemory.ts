@@ -9,8 +9,6 @@ class UrlsRepositoryInMemory implements IUrlsRepository {
   urls = []
 
   constructor(
-    @inject("GenerateCode")
-    private generateCode: GenerateCode
   ) { }
 
   public async encode(url: String, encodedUrl: String): Promise<String> {
