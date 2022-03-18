@@ -23,7 +23,7 @@ describe("Encode URL", () => {
     expect(encodedURL).toMatch(regexEncodeURL);
   });
 
-  it("should be able to return short url with 5 character encoding after last slash", async () => {
+  it("should be able to return short URL with 5 character encoding after last slash", async () => {
 
     const result = await encodeURLUseCase.execute("http://www.google.com")
 
@@ -35,7 +35,14 @@ describe("Encode URL", () => {
     expect(encode.length).toBe(5);
   });
 
-  it("should not be able to shorten an invalid url", async () => {
+  it("should not be able to re-encode a url that has already been encoded", async () => {
+    expect(async () => {
+      await encodeURLUseCase.execute("http://test.com/1")
+      await encodeURLUseCase.execute("http://test.com/1")
+    }).rejects.toBeInstanceOf(AppError);
+  })
+
+  it("should not be able to shorten an invalid URL", async () => {
 
     const invalidURL1 = "google"
     const invalidURL2 = "google.com"

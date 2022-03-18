@@ -16,10 +16,10 @@
 ## Regras de Negócio
 
 ### Encode
-- [] Deve ser possível fazer o encode de uma URL para encurtar-la
+- [x] Deve ser possível fazer o encode de uma URL para encurtar-la
 - [] Deve ser possível salvar o short url no BD (UUID, url - unique, short_url - unique, created_at)
 - [] Não deve ser possível fazer o encode de uma URL inválida - Caso seja inválida, lançar erro 400
-- [] Não deve ser possível salvar URL iguais. Caso já exista a URL encurtada no BD, gerar nova URL encurtada até ser única. (loop)
+- [] Não deve ser possível salvar URL em duplicidade. Caso já exista a URL encurtada no BD, trazer a url.
 
 ### Decode
 - [] Deve ser possível fazer o decode do URL encurtado para o URL original, buscando no banco de dados
