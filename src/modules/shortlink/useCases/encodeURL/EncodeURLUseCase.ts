@@ -29,6 +29,8 @@ class EncodeURLUseCase {
 
     const encodedUrl = `http://localhost:3000/${await this.generateCode.get()}`;
 
+    await this.urlsRepository.encode(url, encodedUrl);
+
     return encodedUrl;
   }
 }

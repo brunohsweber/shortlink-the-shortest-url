@@ -47,13 +47,16 @@ describe("Encode URL", () => {
 
 
   it("should not be able to re-encode a url that has already been encoded", async () => {
-
-    const url = "http://www.google.com"
-
-    await encodeURLUseCase.execute(url)
-
     expect(async () => {
-      return await encodeURLUseCase.execute(url)
+
+      const url = "http://www.google.com"
+
+      const result1 = await encodeURLUseCase.execute(url)
+      console.log(result1)
+
+      const result2 = await encodeURLUseCase.execute(url)
+      console.log(result2)
+
     }).rejects.toBeInstanceOf(URLAlreadyEncodedError);
   })
 
