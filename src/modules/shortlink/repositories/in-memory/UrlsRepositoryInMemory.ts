@@ -13,14 +13,12 @@ class UrlsRepositoryInMemory implements IUrlsRepository {
     private generateCode: GenerateCode
   ) { }
 
-  public async encode(url: string): Promise<String> {
+  public async encode(url: String, encodedUrl: String): Promise<String> {
     const urlObj = {}
-
-    const shortUrl = this.generateCode.get();
 
     Object.assign(urlObj, {
       url,
-      short_url: shortUrl
+      short_url: encodedUrl
     })
 
     this.urls.push(urlObj)

@@ -9,7 +9,7 @@ class UrlsRepository implements IUrlsRepository {
 
   constructor() { }
 
-  public async encode(url: string): Promise<String> {
+  public async encode(url: string, encodedUrl: string): Promise<String> {
 
     const result = await this.repository.create({
       data: {

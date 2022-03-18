@@ -23,17 +23,16 @@ class EncodeURLUseCase {
 
     if (!isValidUrl) throw new InvalidURLError();
 
-    const shortUrlFound = await this.urlsRepository.findByUrl(url);
+    const hasURLEncoded = await this.urlsRepository.findByUrl(url);
 
-    if (shortUrlFound) {
-      return shortUrlFound
+    if (hasURLEncoded) {
+      return hasURLEncoded
+    } else {
+      const encodedURL = `http://localhost:3000/${await this.generateCode.get()}`;
+
+      return await this.urlsRepository.encode(url, encodedURL);
     }
 
-    const encodedUrl = `http://localhost:3000/${await this.generateCode.get()}`;
-
-    await this.urlsRepository.encode(url, encodedUrl);
-
-    return encodedUrl;
   }
 }
 
