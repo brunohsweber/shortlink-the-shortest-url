@@ -20,9 +20,9 @@ class EncodeURLUseCase {
 
     if (!isValidUrl) throw new AppError("Invalid URL");
 
-    const short_url = `http://localhost:3000/${await this.generateCode.get()}`;
+    const encodedUrl = `http://localhost:3000/${await this.generateCode.get()}`;
 
-    return short_url;
+    return encodedUrl;
   }
 }
 

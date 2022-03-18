@@ -13,21 +13,55 @@ describe("Encode URL", () => {
   })
 
   it("should be able encode an URL", async () => {
-    const url = "https://www.google.com";
 
-    const result = await encodeURLUseCase.execute(url);
+    const encodedURL = await encodeURLUseCase.execute("http://www.google.com")
 
-    expect(typeof result).toBe("string")
+    const regexEncodeURL = /^http:\/\/localhost:3000\/[a-zA-Z0-9]{5}$/;
+
+    expect(encodedURL).toBeDefined();
+    expect(typeof encodedURL).toBe("string");
+    expect(encodedURL).toMatch(regexEncodeURL);
+  });
+
+  it("should be able to return short url with 5 character encoding after last slash", async () => {
+
+    const result = await encodeURLUseCase.execute("http://www.google.com")
+
+    const urlArray = result.split("/")
+
+    const encode = urlArray[urlArray.length - 1]
+
+    expect(typeof encode).toBe("string");
+    expect(encode.length).toBe(5);
   });
 
   it("should not be able to shorten an invalid url", async () => {
-    expect(async () => {
-      await encodeURLUseCase.execute("batatinhafrita123")
-    }).rejects.toBeInstanceOf(AppError);
 
-    expect(async () => {
-      await encodeURLUseCase.execute("https://www.google,com")
-    }).rejects.toBeInstanceOf(AppError);
+    const invalidURL1 = "google"
+    const invalidURL2 = "google.com"
+    const invalidURL3 = ".google.com"
+    const invalidURL4 = "ww.google.com"
+    const invalidURL5 = "www.google"
+    const invalidURL6 = "www.google."
+    const invalidURL7 = "www.google.c"
+    const invalidURL8 = "http:/www.google.com"
+    const invalidURL9 = "htp://www.google.com"
+    const invalidURL10 = "ttp://www.google.com"
+    const invalidURL11 = "https://google.com"
+    const invalidURL12 = "htps://google.com"
+
+    expect(encodeURLUseCase.execute(invalidURL1)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL2)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL3)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL4)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL5)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL6)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL7)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL8)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL9)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL10)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL11)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL12)).rejects.toBeInstanceOf(AppError);
   })
 
 })
