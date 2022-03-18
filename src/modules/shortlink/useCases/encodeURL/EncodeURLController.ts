@@ -11,7 +11,7 @@ class EncodeURLController {
 
     const shortUrl = await encodeURLUseCase.execute(url);
 
-    return response.status(201).json(shortUrl);
+    return response.status(200).json({ shortUrl });
   }
 }
 

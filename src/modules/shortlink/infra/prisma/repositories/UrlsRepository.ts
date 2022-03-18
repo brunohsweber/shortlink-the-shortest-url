@@ -14,7 +14,7 @@ class UrlsRepository implements IUrlsRepository {
     const result = await this.repository.create({
       data: {
         url: url,
-        short_url: await this.generateCode.get()
+        short_url: encodedUrl
       }
     })
 
