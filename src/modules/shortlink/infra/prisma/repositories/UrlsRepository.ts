@@ -1,24 +1,34 @@
+import { ICreateUrlDTO } from "@modules/shortlink/dtos/ICreateUrlDTO";
+import { IUrlDTO } from "@modules/shortlink/dtos/IUrlDTO";
 import { IUrlsRepository } from "@modules/shortlink/repositories/IUrlsRepository";
-import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
 import { prisma } from "@shared/infra/prisma/prismaClient";
 
 class UrlsRepository implements IUrlsRepository {
 
   private repository = prisma.urls;
-  private generateCode = new GenerateCode();
 
-  constructor() { }
-
-  public async encode(url: string, encodedUrl: string): Promise<String> {
+  public async create({ url, shortUrl }: ICreateUrlDTO): Promise<String> {
 
     const result = await this.repository.create({
       data: {
         url: url,
-        short_url: encodedUrl
+        short_url: shortUrl
       }
     })
 
     return result.short_url
+  }
+
+  public async findByShortUrl(shortUrl: string): Promise<String | undefined> {
+    const result = await this.repository.findFirst({
+      where: {
+        short_url: {
+          equals: shortUrl
+        }
+      }
+    })
+
+    return result.url
   }
 
   public async findByUrl(url: string): Promise<String | undefined> {
@@ -30,11 +40,7 @@ class UrlsRepository implements IUrlsRepository {
       }
     })
 
-    return result?.short_url
-  }
-
-  public async decode(url: string): Promise<String> {
-    throw new Error("Method not implemented.");
+    return result.short_url
   }
 }
 

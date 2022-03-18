@@ -11,10 +11,10 @@ datasource db {
 }
 
 model Urls {
-  id        String   @id @default(cuid()) @db.VarChar(36)
-  url       String   @unique @db.VarChar(255)
-  short_url String   @unique @db.VarChar(50)
-  createdAt DateTime @default(now())
+  id         String   @id @default(cuid()) @db.VarChar(36)
+  url        String   @unique @db.VarChar(255)
+  short_url  String   @unique @db.VarChar(50)
+  created_at DateTime @default(now())
 
   @@map("urls")
 }

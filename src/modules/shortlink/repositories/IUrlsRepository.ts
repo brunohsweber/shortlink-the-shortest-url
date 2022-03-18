@@ -1,6 +1,8 @@
+import { ICreateUrlDTO } from "../dtos/ICreateUrlDTO";
+
 interface IUrlsRepository {
-  encode(url: String, encodedUrl: String): Promise<String>;
-  decode(short_url: string): Promise<String | undefined>;
+  create({ url, shortUrl }: ICreateUrlDTO): Promise<String>;
+  findByShortUrl(shortUrl: string): Promise<String | undefined>;
   findByUrl(url: string): Promise<String | undefined>;
 }
 

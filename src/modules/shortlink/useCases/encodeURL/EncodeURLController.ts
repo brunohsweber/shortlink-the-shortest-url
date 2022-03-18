@@ -9,9 +9,9 @@ class EncodeURLController {
 
     const encodeURLUseCase = container.resolve(EncodeURLUseCase);
 
-    const shortUrl = await encodeURLUseCase.execute(url);
+    const result = await encodeURLUseCase.execute(url);
 
-    return response.status(200).json({ shortUrl });
+    return response.status(200).json(result);
   }
 }
 

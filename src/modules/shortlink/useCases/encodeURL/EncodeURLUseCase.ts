@@ -22,16 +22,30 @@ class EncodeURLUseCase {
 
     if (!isValidUrl) throw new InvalidURLError();
 
-    const hasURLEncoded = await this.urlsRepository.findByUrl(url);
+    //const urlAlreadyExist = await this.urlsRepository.findByUrl(url)
 
-    if (hasURLEncoded) {
-      return hasURLEncoded
-    } else {
-      const encodedURL = `http://localhost:3000/${await this.generateCode.get()}`;
+    console.log("chegou aqui")
 
-      return await this.urlsRepository.encode(url, encodedURL);
+    /*
+
+    const encodeURL = (shortUrl: String) => `http://localhost:3000/${shortUrl}`;
+
+    if (!urlAlreadyExist) {
+
+      const shortUrl = await this.generateCode.get();
+
+      const result = await this.urlsRepository.create({ url, shortUrl });
+
+      const urlEncoded = encodeURL(result);
+
+      return urlEncoded;
     }
 
+    const urlEncoded = encodeURL(urlAlreadyExist);
+
+    return urlEncoded;
+
+    */
   }
 }
 

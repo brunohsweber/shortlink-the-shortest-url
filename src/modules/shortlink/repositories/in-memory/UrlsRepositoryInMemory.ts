@@ -1,37 +1,33 @@
+import { ICreateUrlDTO } from "@modules/shortlink/dtos/ICreateUrlDTO";
 import { Url } from "@modules/shortlink/infra/prisma/entities/Url";
-import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
-import { inject, injectable } from "tsyringe";
 import { IUrlsRepository } from "../IUrlsRepository";
 
-@injectable()
 class UrlsRepositoryInMemory implements IUrlsRepository {
 
-  urls = []
+  urls: Url[] = []
 
-  constructor(
-  ) { }
+  public async create({ url, shortUrl }: ICreateUrlDTO): Promise<String> {
 
-  public async encode(url: String, encodedUrl: String): Promise<String> {
-    const urlObj = {}
-
-    Object.assign(urlObj, {
-      url,
-      short_url: encodedUrl
+    this.urls.push({
+      id: `uuid${this.urls.length + 1}`,
+      url: url,
+      short_url: shortUrl,
+      created_at: Date.now()
     })
-
-    this.urls.push(urlObj)
 
     return this.urls[this.urls.length - 1].short_url
   }
 
-  public async findByUrl(url: string): Promise<String | undefined> {
-    const urlObj = this.urls.find(urlObj => urlObj.url === url)
+  public async findByUrl(url: String): Promise<String | undefined> {
+    const result = this.urls.find(obj => obj.url === url)
 
-    return urlObj?.short_url
+    return result.short_url
   }
 
-  public async decode(url: string): Promise<String> {
-    throw new Error("Method not implemented.");
+  public async findByShortUrl(shortUrl: String): Promise<String | undefined> {
+    const result = await this.urls.find(obj => obj.short_url === shortUrl)
+
+    return result
   }
 
 }
