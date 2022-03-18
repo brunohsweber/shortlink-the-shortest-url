@@ -24,7 +24,9 @@ class UrlsRepository implements IUrlsRepository {
   public async findByUrl(url: string): Promise<String | undefined> {
     const result = await this.repository.findFirst({
       where: {
-        url: url
+        url: {
+          equals: url
+        }
       }
     })
 
