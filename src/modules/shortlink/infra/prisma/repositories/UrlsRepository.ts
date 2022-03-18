@@ -20,11 +20,9 @@ class UrlsRepository implements IUrlsRepository {
   }
 
   public async findByShortUrl(shortUrl: string): Promise<IUrlDTO | undefined> {
-    const result = await this.repository.findFirst({
+    const result = await this.repository.findUnique({
       where: {
-        short_url: {
-          equals: shortUrl
-        }
+        short_url: shortUrl
       }
     })
 
@@ -32,11 +30,9 @@ class UrlsRepository implements IUrlsRepository {
   }
 
   public async findByUrl(url: string): Promise<IUrlDTO | undefined> {
-    const result = await this.repository.findFirst({
+    const result = await this.repository.findUnique({
       where: {
-        url: {
-          equals: url
-        }
+        url: url
       }
     })
 

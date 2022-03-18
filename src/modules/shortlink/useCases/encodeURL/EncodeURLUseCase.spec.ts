@@ -44,7 +44,6 @@ describe("Encode URL", () => {
     expect(encode.length).toBe(5);
   });
 
-
   it("should be able to return the short url of a url that has already been saved", async () => {
     const url = "http://www.google.com"
 
