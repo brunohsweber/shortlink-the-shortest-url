@@ -1,13 +1,13 @@
 import { ICreateUrlDTO } from "@modules/shortlink/dtos/ICreateUrlDTO";
-import { IUrlDTO } from "@modules/shortlink/dtos/IUrlDTO";
 import { IUrlsRepository } from "@modules/shortlink/repositories/IUrlsRepository";
 import { prisma } from "@shared/infra/prisma/prismaClient";
+import { Url } from "../entities/Url";
 
 class UrlsRepository implements IUrlsRepository {
 
   private repository = prisma.urls;
 
-  public async create({ url, codeShortUrl }: ICreateUrlDTO): Promise<string> {
+  public async create({ url, codeShortUrl }: ICreateUrlDTO): Promise<Url> {
 
     const result = await this.repository.create({
       data: {
@@ -16,25 +16,17 @@ class UrlsRepository implements IUrlsRepository {
       }
     })
 
-    return result.short_url
+    return result
   }
 
-  public async findByShortUrl(codeShortUrl: string): Promise<IUrlDTO | undefined> {
-    const result = await this.repository.findUnique({
-      where: {
-        short_url: codeShortUrl
-      }
-    })
+  public async findByShortUrl(codeShortUrl: string): Promise<Url | undefined> {
+    const result = await this.repository.findUnique({ where: { short_url: codeShortUrl } })
 
     return result
   }
 
-  public async findByUrl(url: string): Promise<IUrlDTO | undefined> {
-    const result = await this.repository.findUnique({
-      where: {
-        url: url
-      }
-    })
+  public async findByUrl(url: string): Promise<Url | undefined> {
+    const result = await this.repository.findUnique({ where: { url: url } })
 
     return result
   }

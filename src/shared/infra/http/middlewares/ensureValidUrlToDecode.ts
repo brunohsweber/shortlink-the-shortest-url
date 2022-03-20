@@ -1,6 +1,7 @@
-import { URLValidationProvider } from "@shared/container/providers/URLValidationProvider/implementations/URLValidationProvider";
-import { InvalidURLToDecodeError } from "@shared/errors/InvalidURLToDecodeError";
-import { URLIsRequiredError } from "@shared/errors/URLIsRequiredError";
+
+import { UrlValidationProvider } from "@shared/container/providers/UrlValidationProvider/implementations/UrlValidationProvider";
+import { InvalidUrlToDecodeError } from "@shared/errors/InvalidUrlToDecodeError";
+import { UrlIsRequiredError } from "@shared/errors/UrlIsRequiredError";
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -12,15 +13,15 @@ export async function ensureValidUrlToDecode(
   const { url } = request.body;
 
   if (!url) {
-    throw new URLIsRequiredError();
+    throw new UrlIsRequiredError();
   };
 
-  const urlValidationProvider = container.resolve(URLValidationProvider);
+  const urlValidationProvider = container.resolve(UrlValidationProvider);
 
-  const isValidURLToDecode = await urlValidationProvider.isValidToDecode(url);
+  const isValidUrlToDecode = await urlValidationProvider.isValidToDecode(url);
 
-  if (!isValidURLToDecode) {
-    throw new InvalidURLToDecodeError();
+  if (!isValidUrlToDecode) {
+    throw new InvalidUrlToDecodeError();
   }
 
   return next();
