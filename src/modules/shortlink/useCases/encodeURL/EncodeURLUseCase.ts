@@ -1,29 +1,18 @@
 import { IUrlsRepository } from "@modules/shortlink/repositories/IUrlsRepository";
-import { GenerateCodeShortURLProvider } from "@shared/container/providers/GenerateCodeShortURLProvider/implementations/GenerateCodeShortURLProvider";
-import { UrlValidationProvider } from "@shared/container/providers/UrlValidationProvider/implementations/UrlValidationProvider";
+import { IGenerateCodeShortURLProvider } from "@shared/container/providers/GenerateCodeShortURLProvider/IGenerateCodeShortURLProvider";
 import { inject, injectable } from "tsyringe";
-import { InvalidURLToEncodeError } from "./InvalidURLToEncodeError";
 
 @injectable()
 class EncodeURLUseCase {
 
   constructor(
-    @inject("UrlValidation")
-    private urlValidation: UrlValidationProvider,
-    @inject("GenerateCodeShortUrl")
-    private generateCodeShortUrl: GenerateCodeShortURLProvider,
     @inject("UrlsRepository")
-    private urlsRepository: IUrlsRepository
-  ) {
-  }
+    private urlsRepository: IUrlsRepository,
+    @inject("GenerateCodeShortURLProvider")
+    private generateCodeShortURLProvider: IGenerateCodeShortURLProvider
+  ) { }
 
   public async execute(url: string): Promise<String> {
-
-    const isValidURLToEncode = await this.urlValidation.isValidToEncode(url);
-
-    if (!isValidURLToEncode) {
-      throw new InvalidURLToEncodeError();
-    }
 
     const urlAlreadyExist = await this.urlsRepository.findByUrl(url)
 
@@ -33,7 +22,7 @@ class EncodeURLUseCase {
 
     if (!urlAlreadyExist) {
 
-      const codeShortUrl = await this.generateCodeShortUrl.generate();
+      const codeShortUrl = await this.generateCodeShortURLProvider.generate();
 
       const result = await this.urlsRepository.create({ url, codeShortUrl });
 

@@ -1,16 +1,17 @@
 import { container } from "tsyringe";
-
-import { IUrlValidationProvider } from "./UrlValidationProvider/IUrlValidationProvider";
-import { UrlValidationProvider } from "./UrlValidationProvider/implementations/UrlValidationProvider";
 import { IGenerateCodeShortURLProvider } from "./GenerateCodeShortURLProvider/IGenerateCodeShortURLProvider";
 import { GenerateCodeShortURLProvider } from "./GenerateCodeShortURLProvider/implementations/GenerateCodeShortURLProvider";
 
-container.registerSingleton<IUrlValidationProvider>(
-  "UrlValidationProvider",
-  UrlValidationProvider
+import { URLValidationProvider } from "./URLValidationProvider/implementations/URLValidationProvider";
+import { IURLValidationProvider } from "./URLValidationProvider/IURLValidationProvider";
+
+container.registerSingleton<IURLValidationProvider>(
+  "URLValidationProvider",
+  URLValidationProvider
 );
 
 container.registerSingleton<IGenerateCodeShortURLProvider>(
   "GenerateCodeShortURLProvider",
   GenerateCodeShortURLProvider
 )
+

@@ -34,6 +34,8 @@ describe("Encode URL Controller", () => {
     expect(response.status).toBe(200);
   });
 
+  /*
+
   it("should be able to return the shortUrl of an already existing URL", async () => {
 
     const response = await request(app)
@@ -44,6 +46,9 @@ describe("Encode URL Controller", () => {
 
     expect(response.status).toBe(200);
   });
+
+  */
+
 
   it("should not be able to shorten an invalid URL", async () => {
 
