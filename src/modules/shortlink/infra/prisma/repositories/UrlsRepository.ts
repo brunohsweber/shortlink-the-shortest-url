@@ -7,22 +7,22 @@ class UrlsRepository implements IUrlsRepository {
 
   private repository = prisma.urls;
 
-  public async create({ url, shortUrl }: ICreateUrlDTO): Promise<String> {
+  public async create({ url, codeShortUrl }: ICreateUrlDTO): Promise<string> {
 
     const result = await this.repository.create({
       data: {
         url: url,
-        short_url: shortUrl
+        short_url: codeShortUrl
       }
     })
 
     return result.short_url
   }
 
-  public async findByShortUrl(shortUrl: string): Promise<IUrlDTO | undefined> {
+  public async findByShortUrl(codeShortUrl: string): Promise<IUrlDTO | undefined> {
     const result = await this.repository.findUnique({
       where: {
-        short_url: shortUrl
+        short_url: codeShortUrl
       }
     })
 

@@ -1,6 +1,6 @@
 interface ICreateUrlDTO {
   url: string;
-  shortUrl: string;
+  codeShortUrl: string;
 }
 
 export { ICreateUrlDTO };

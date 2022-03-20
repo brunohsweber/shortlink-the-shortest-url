@@ -1,4 +1,6 @@
-class GenerateCode {
+import { IGenerateCodeShortURLProvider } from "../IGenerateCodeShortURLProvider";
+
+class GenerateCodeShortURLProvider implements IGenerateCodeShortURLProvider {
 
   private code: string;
 
@@ -6,8 +8,7 @@ class GenerateCode {
     this.code = "";
   }
 
-  public async get(): Promise<string> {
-
+  public async generate(): Promise<string> {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
     for (let i = 0; i < 5; i++) {
@@ -18,4 +19,4 @@ class GenerateCode {
   }
 }
 
-export { GenerateCode };
+export { GenerateCodeShortURLProvider };

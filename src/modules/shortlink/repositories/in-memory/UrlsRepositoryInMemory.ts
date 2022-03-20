@@ -7,12 +7,12 @@ class UrlsRepositoryInMemory implements IUrlsRepository {
 
   urls: Url[] = []
 
-  public async create({ url, shortUrl }: ICreateUrlDTO): Promise<String> {
+  public async create({ url, codeShortUrl }: ICreateUrlDTO): Promise<string> {
 
     this.urls.push({
       id: `uuid${this.urls.length + 1}`,
       url: url,
-      short_url: shortUrl,
+      short_url: codeShortUrl,
       created_at: new Date(Date.now())
     })
 
@@ -25,8 +25,8 @@ class UrlsRepositoryInMemory implements IUrlsRepository {
     return result
   }
 
-  public async findByShortUrl(shortUrl: String): Promise<IUrlDTO | undefined> {
-    const result = this.urls.find(obj => obj.short_url === shortUrl)
+  public async findByShortUrl(codeShortUrl: String): Promise<IUrlDTO | undefined> {
+    const result = this.urls.find(obj => obj.short_url === codeShortUrl)
 
     return result
   }

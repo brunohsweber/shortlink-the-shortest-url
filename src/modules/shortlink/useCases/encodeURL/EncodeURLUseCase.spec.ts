@@ -1,22 +1,23 @@
 import { UrlsRepositoryInMemory } from "@modules/shortlink/repositories/in-memory/UrlsRepositoryInMemory";
-import { GenerateCode } from "@modules/shortlink/utils/GenerateCode";
-import { UrlValidation } from "@modules/shortlink/utils/UrlValidation";
-import { AppError } from "@shared/errors/AppError";
+import { GenerateCodeShortURLProvider } from "@shared/container/providers/GenerateCodeShortURLProvider/implementations/GenerateCodeShortURLProvider";
+import { UrlValidationProvider } from "@shared/container/providers/UrlValidationProvider/implementations/UrlValidationProvider";
+
 import { EncodeURLUseCase } from "./EncodeURLUseCase";
+import { InvalidURLToEncodeError } from "./InvalidURLToEncodeError";
 
 let urlsRepositoryInMemory: UrlsRepositoryInMemory;
-let urlValidation: UrlValidation;
-let generateCode: GenerateCode;
+let urlValidation: UrlValidationProvider;
+let generateCodeShortURL: GenerateCodeShortURLProvider;
 let encodeURLUseCase: EncodeURLUseCase;
 
 describe("Encode URL", () => {
   beforeEach(() => {
-    urlValidation = new UrlValidation();
-    generateCode = new GenerateCode();
+    urlValidation = new UrlValidationProvider();
+    generateCodeShortURL = new GenerateCodeShortURLProvider();
     urlsRepositoryInMemory = new UrlsRepositoryInMemory();
     encodeURLUseCase = new EncodeURLUseCase(
       urlValidation,
-      generateCode,
+      generateCodeShortURL,
       urlsRepositoryInMemory
     );
   })
@@ -72,18 +73,18 @@ describe("Encode URL", () => {
     const invalidURL11 = "https://google.com"
     const invalidURL12 = "htps://google.com"
 
-    expect(encodeURLUseCase.execute(invalidURL1)).rejects.toBeInstanceOf(AppError);
-    expect(encodeURLUseCase.execute(invalidURL2)).rejects.toBeInstanceOf(AppError);
-    expect(encodeURLUseCase.execute(invalidURL3)).rejects.toBeInstanceOf(AppError);
-    expect(encodeURLUseCase.execute(invalidURL4)).rejects.toBeInstanceOf(AppError);
-    expect(encodeURLUseCase.execute(invalidURL5)).rejects.toBeInstanceOf(AppError);
-    expect(encodeURLUseCase.execute(invalidURL6)).rejects.toBeInstanceOf(AppError);
-    expect(encodeURLUseCase.execute(invalidURL7)).rejects.toBeInstanceOf(AppError);
-    expect(encodeURLUseCase.execute(invalidURL8)).rejects.toBeInstanceOf(AppError);
-    expect(encodeURLUseCase.execute(invalidURL9)).rejects.toBeInstanceOf(AppError);
-    expect(encodeURLUseCase.execute(invalidURL10)).rejects.toBeInstanceOf(AppError);
-    expect(encodeURLUseCase.execute(invalidURL11)).rejects.toBeInstanceOf(AppError);
-    expect(encodeURLUseCase.execute(invalidURL12)).rejects.toBeInstanceOf(AppError);
+    expect(encodeURLUseCase.execute(invalidURL1)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
+    expect(encodeURLUseCase.execute(invalidURL2)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
+    expect(encodeURLUseCase.execute(invalidURL3)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
+    expect(encodeURLUseCase.execute(invalidURL4)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
+    expect(encodeURLUseCase.execute(invalidURL5)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
+    expect(encodeURLUseCase.execute(invalidURL6)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
+    expect(encodeURLUseCase.execute(invalidURL7)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
+    expect(encodeURLUseCase.execute(invalidURL8)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
+    expect(encodeURLUseCase.execute(invalidURL9)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
+    expect(encodeURLUseCase.execute(invalidURL10)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
+    expect(encodeURLUseCase.execute(invalidURL11)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
+    expect(encodeURLUseCase.execute(invalidURL12)).rejects.toBeInstanceOf(InvalidURLToEncodeError);
   })
 
 })
