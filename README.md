@@ -46,7 +46,7 @@ O projeto foi proposto como desafio técnico para a empresa [Going2 Mobile](http
 <br><br>Boa parte do tempo dispensado no desenvolvimento do projeto foi devido à refatorações de códigos e testes, mas o investimento de tempo fazendo isso valeu a pena no fim das contas.
 <br><br>Outro ponto importante que destaco aqui é que o projeto poderia sim ter ficado muito mais enxuto, porém, essa arquitetura mais extensa e "complexa" faz sentido em qualquer tipo de projeto pois é fácil de ler, de implementar coisas novas e de fazer manutenções.
 <br><br>Neste quesito de analisar e decidir sobre como iniciar um projeto, parto do princípio de que nunca sabemos com exatidão quão longe pode chegar nossa aplicação.
-A ideia é que, mesmo sabendo que hoje a minha aplicação pode ter 1 ou 2 rotas ou X features, a tendência é sempre aumentar, então, que se for para dispensar tempo arquitetando o projeto, que seja no início :)
+A ideia é que, mesmo sabendo que hoje a minha aplicação pode ter 1 ou 2 rotas ou X features, a tendência é sempre aumentar. Então, que se for para dispensar tempo arquitetando o projeto, que seja no início :)
 
 
 ## :rocket: Para desenvolver esse projeto utilizei as seguintes tecnologias:
@@ -99,6 +99,11 @@ $ docker-compose up
 $ yarn prisma migration deploy
 ou
 $ npx prisma migration deploy
+
+# Rode os testes:
+$ yarn test
+ou
+$ npm run test
 
 # Rode a aplicação em modo produção:
 $ yarn start:prod
