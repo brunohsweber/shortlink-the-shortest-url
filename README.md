@@ -28,7 +28,7 @@ O projeto foi proposto como desafio técnico para a empresa [Going2 Mobile](http
 
 <br>Após a leitura do escopo do projeto e os requisitos iniciais em pauta, fui escrevendo em um arquivo "requisitos.md" todos estes requisitos funcionais da aplicação. A partir daí já comecei a pensar de forma mais organizada como iniciar o projeto, onde cheguei na seguinte linha de raciocínio:
 
-  - :bulb: Eu simplesmente deveria codificar um URL válido para um URL encurtado com um código aleatório alfanumérico, persistir a URL original em uma coluna e o código encurtado em outra coluna. E, para devolver para o cliente este URL codificado ou descodificado, eu só precisaria fazer uma busca simples no banco de dados referenciando um ou outro.
+  - <b>Eu simplesmente deveria codificar um URL válido para um URL encurtado com um código aleatório alfanumérico, persistir a URL original em uma coluna e o código encurtado em outra coluna. E, para devolver para o cliente este URL codificado ou descodificado, eu só precisaria fazer uma busca simples no banco de dados referenciando um ou outro.</b>
 
   - Para isso, sem a utilização de bibliotecas criei uma regra de validação de URL de entrada utilizando RegEx. Caso essa URL não passasse na validação, retornaria um erro 400 para o cliente. Após algumas refatorações do código, coloquei esta validação em um middleware específico para deixar a aplicação mais desacoplada e delegável (ela nem passava pelo controller mais!)
 
