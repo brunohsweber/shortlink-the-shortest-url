@@ -87,23 +87,23 @@ $ yarn
 ou
 $ npm run install
 
-# Gere o build da aplicação
-$ yarn build
-ou
-$ npm run build
-
 # Instancie o container do banco de dados com o Docker-Compose:
 $ docker-compose up
 
 # Para rodar as migrations:
-$ yarn prisma migration deploy
+$ yarn migrate:deploy
 ou
-$ npx prisma migration deploy
+$ npx run migrate:deploy
 
 # Rode os testes:
 $ yarn test
 ou
 $ npm run test
+
+# Gere o build da aplicação
+$ yarn build
+ou
+$ npm run build
 
 # Rode a aplicação em modo produção:
 $ yarn start:prod
