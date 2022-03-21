@@ -72,6 +72,29 @@ describe("Encode Url Controller", () => {
     expect.assertions(5);
   });
 
+  it("should not be able to accept an undefined url", async () => {
+
+    const response1 = await request(app)
+      .post("/encode")
+      .send({
+        url: undefined,
+      })
+
+    const response2 = await request(app)
+      .post("/encode")
+      .send()
+
+    expect(response1.status).toBe(400);
+    expect(response1.body).toHaveProperty("message");
+    expect(response1.body.message).toBe("Url is required!");
+
+    expect(response2.status).toBe(400);
+    expect(response2.body).toHaveProperty("message");
+    expect(response2.body.message).toBe("Url is required!");
+
+    expect.assertions(6);
+  })
+
   it("should not be able to accept an invalid url", async () => {
 
     const response1 = await request(app).post("/encode").send({ url: "google" })

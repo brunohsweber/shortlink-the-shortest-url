@@ -1,5 +1,6 @@
 import { UrlsRepositoryInMemory } from "@modules/shortlink/repositories/in-memory/UrlsRepositoryInMemory";
 import { GenerateCodeShortUrlProvider } from "@shared/container/providers/GenerateCodeShortUrlProvider/implementations/GenerateCodeShortUrlProvider";
+import { UrlNotFoundError } from "@shared/errors/UrlNotFoundError";
 import { EncodeUrlUseCase } from "../encodeUrl/EncodeUrlUseCase";
 import { DecodeUrlUseCase } from "./DecodeUrlUseCase";
 
@@ -33,7 +34,7 @@ describe("Decode Url", () => {
     expect(DecodeUrlUseCase.prototype.execute).toBeDefined();
   })
 
-  it("should be able to decode a shortened url from an existing url in the database", async () => {
+  it("should be able to decode a url from an existent url in the database", async () => {
 
     const urlEncoded = await encodeUrlUseCase.execute("http://www.google.com")
 
@@ -44,8 +45,9 @@ describe("Decode Url", () => {
     expect(UrlDecoded).toBe("http://www.google.com");
   })
 
-  it("should not be able to decode a short url from a url that doesn't exist in the database", async () => {
-
-
+  it("should not be able to decode a url from an non-existent encoded url in the database", async () => {
+    expect((async () => {
+      await decodeUrlUseCase.execute("http://localhost:3000/12345");
+    })).rejects.toBeInstanceOf(UrlNotFoundError);
   })
 })

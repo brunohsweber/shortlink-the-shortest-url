@@ -3,6 +3,8 @@ import request from "supertest";
 import { app } from "@shared/infra/http/app";
 import { prisma } from "@shared/infra/prisma/prismaClient";
 import { DecodeUrlController } from "./DecodeUrlController";
+import { InvalidUrlToDecodeError } from "@shared/errors/InvalidUrlToDecodeError";
+import { UrlIsRequiredError } from "@shared/errors/UrlIsRequiredError";
 
 describe("Decode Url Controller", () => {
   beforeAll(async () => {
@@ -40,15 +42,13 @@ describe("Decode Url Controller", () => {
     expect(DecodeUrlController.prototype.handle).toBeDefined();
   })
 
-  it("should be able to decode an url", async () => {
+  it("should be able to return a decoded url", async () => {
 
     const urlEncoded = await request(app)
       .post("/encode")
       .send({
         url: "http://www.google.com.br",
       })
-
-    console.log(urlEncoded.body.urlEncoded)
 
     const urlDecoded = await request(app)
       .post("/decode")
@@ -63,20 +63,43 @@ describe("Decode Url Controller", () => {
     expect.assertions(3);
   });
 
-  it("should not be able to accept an invalid url", async () => {
+  it("should not be able to accept an undefined url", async () => {
 
-    const response1 = await request(app).post("/encode").send({ url: "google" })
-    const response2 = await request(app).post("/encode").send({ url: "google.com" })
-    const response3 = await request(app).post("/encode").send({ url: ".google.com" })
-    const response4 = await request(app).post("/encode").send({ url: "ww.google.com" })
-    const response5 = await request(app).post("/encode").send({ url: "www.google" })
-    const response6 = await request(app).post("/encode").send({ url: "www.google." })
-    const response7 = await request(app).post("/encode").send({ url: "www.google.c" })
-    const response8 = await request(app).post("/encode").send({ url: "http:/www.google.com" })
-    const response9 = await request(app).post("/encode").send({ url: "htp://www.google.com" })
-    const response10 = await request(app).post("/encode").send({ url: "ttp://www.google.com" })
-    const response11 = await request(app).post("/encode").send({ url: "https://google.com" })
-    const response12 = await request(app).post("/encode").send({ url: "htps://www.google.com" })
+    const response1 = await request(app)
+      .post("/decode")
+      .send({
+        url: undefined,
+      })
+
+    const response2 = await request(app)
+      .post("/decode")
+      .send()
+
+    expect(response1.status).toBe(400);
+    expect(response1.body).toHaveProperty("message");
+    expect(response1.body.message).toBe("Url is required!");
+
+    expect(response2.status).toBe(400);
+    expect(response2.body).toHaveProperty("message");
+    expect(response2.body.message).toBe("Url is required!");
+
+    expect.assertions(6);
+  })
+
+  it("should not be able to accept an invalid url to decode", async () => {
+
+    const response1 = await request(app).post("/decode").send({ url: "http://localhost:3000/123456" })
+    const response2 = await request(app).post("/decode").send({ url: "localhost:3000/12345" })
+    const response3 = await request(app).post("/decode").send({ url: "www.localhost:3000/1234" })
+    const response4 = await request(app).post("/decode").send({ url: "localhost:3000/1234*" })
+    const response5 = await request(app).post("/decode").send({ url: "www" })
+    const response6 = await request(app).post("/decode").send({ url: "http//localhost:3000/abcde" })
+    const response7 = await request(app).post("/decode").send({ url: "https://batata:3000/1" })
+    const response8 = await request(app).post("/decode").send({ url: "http://localhost:3001/1234" })
+    const response9 = await request(app).post("/decode").send({ url: "kkkk/1234" })
+    const response10 = await request(app).post("/decode").send({ url: "www.false/1234" })
+    const response11 = await request(app).post("/decode").send({ url: ".com.com.com/1234" })
+    const response12 = await request(app).post("/decode").send({ url: "http://localhost:3000/" })
 
     expect(response1.status).toBe(400);
     expect(response2.status).toBe(400);
@@ -92,5 +115,16 @@ describe("Decode Url Controller", () => {
     expect(response12.status).toBe(400);
 
     expect.assertions(12);
+  });
+
+  it("should be able to throw 404 error when shortened url doesn't exist", async () => {
+
+    const response = await request(app).post("/decode").send({ url: "http://localhost:3000/12345" })
+
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.message).toBe("Url not found!");
+
+    expect.assertions(3);
   });
 });

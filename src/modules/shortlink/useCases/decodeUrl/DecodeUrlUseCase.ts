@@ -1,6 +1,6 @@
 import { IUrlsRepository } from "@modules/shortlink/repositories/IUrlsRepository";
+import { UrlNotFoundError } from "@shared/errors/UrlNotFoundError";
 import { inject, injectable } from "tsyringe";
-import { UrlNotFoundError } from "./UrlNotFoundError";
 
 @injectable()
 class DecodeUrlUseCase {
