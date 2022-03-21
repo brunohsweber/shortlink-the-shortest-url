@@ -1,0 +1,122 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Shortlink - The Shortest URL",
+    "description": "This is an API documentation Shortlink - The Shortest URL",
+    "version": "1.0.0",
+    "contact": {
+      "email": "contato@brunoweber.com.br"
+    }
+  },
+  "paths": {
+    "/api/v1/encode": {
+      "post": {
+        "tags": [
+          "Encode URL"
+        ],
+        "summary": "Encode an URL",
+        "description": "Encodes a URL to a shorter URL.\n\n*<i>The URL must meet the validation requirements for encoding, as per the schema.</i>*",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "Attention to Validation:\n\n- May or may not have 'ftp://' 'http://' or 'https://' at the beginning of the URL.\n\n- Requires to have 'www' in the URL.\n\n- Domain must be at least 2 characters.",
+                    "example": "https://www.google.com",
+                    "format": "url",
+                    "required": true
+                  }
+                },
+                "example": {
+                  "url": "https://www.google.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "URL encoded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "urlEncoded": {
+                      "type": "string",
+                      "description": "The encoded URL",
+                      "example": "http://localhost:3000/g01nG",
+                      "format": "url"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: The URL was not submitted or the URL does not meet the requirements as per the schema to be encoded"
+          }
+        }
+      }
+    },
+    "/api/v1/decode": {
+      "post": {
+        "tags": [
+          "Decode URL"
+        ],
+        "summary": "Decode an URL",
+        "description": "Decode a shorter URL to original URL.\n\n*<i>The URL must meet the validation requirements for decoding, as per the schema.</i>*",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "Attention to Validation:\n\n- The URL must be 'http://localhost:3000/' + 5 valid alphanumeric characters'",
+                    "example": "http://localhost:3000/g01nG",
+                    "format": "url",
+                    "required": true
+                  }
+                },
+                "example": {
+                  "url": "http://localhost:3000/g01nG"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "URL decoded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "urlDecoded": {
+                      "type": "string",
+                      "description": "The decoded URL",
+                      "example": "https://www.google.com",
+                      "format": "url"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: The URL was not submitted or the URL does not meet the requirements as per the schema to be decoded"
+          },
+          "404": {
+            "description": "The original URL of the shortened URL could not be found"
+          }
+        }
+      }
+    }
+  }
+}
