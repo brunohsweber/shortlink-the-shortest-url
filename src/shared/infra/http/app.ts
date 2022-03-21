@@ -36,7 +36,7 @@ app.use(
 
 app.use((request: Request, response: Response) =>
   response.status(404).json({
-    message: `A rota solicitada não existe!`
+    message: `Route does not exist!`
   })
 );
 

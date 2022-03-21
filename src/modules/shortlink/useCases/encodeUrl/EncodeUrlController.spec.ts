@@ -37,7 +37,7 @@ describe("Encode Url Controller", () => {
   it("should be able to encode a new url", async () => {
 
     const response = await request(app)
-      .post("/encode")
+      .post("/api/v1/encode")
       .send({
         url: "http://www.google.com",
       })
@@ -51,13 +51,13 @@ describe("Encode Url Controller", () => {
   it("should not be able to re-encode or overwrite an existing url", async () => {
 
     const response1 = await request(app)
-      .post("/encode")
+      .post("/api/v1/encode")
       .send({
         url: "http://www.firstregister.com",
       })
 
     const response2 = await request(app)
-      .post("/encode")
+      .post("/api/v1/encode")
       .send({
         url: "http://www.firstregister.com",
       })
@@ -75,13 +75,13 @@ describe("Encode Url Controller", () => {
   it("should not be able to accept an undefined url", async () => {
 
     const response1 = await request(app)
-      .post("/encode")
+      .post("/api/v1/encode")
       .send({
         url: undefined,
       })
 
     const response2 = await request(app)
-      .post("/encode")
+      .post("/api/v1/encode")
       .send()
 
     expect(response1.status).toBe(400);
@@ -97,18 +97,18 @@ describe("Encode Url Controller", () => {
 
   it("should not be able to accept an invalid url", async () => {
 
-    const response1 = await request(app).post("/encode").send({ url: "google" })
-    const response2 = await request(app).post("/encode").send({ url: "google.com" })
-    const response3 = await request(app).post("/encode").send({ url: ".google.com" })
-    const response4 = await request(app).post("/encode").send({ url: "ww.google.com" })
-    const response5 = await request(app).post("/encode").send({ url: "www.google" })
-    const response6 = await request(app).post("/encode").send({ url: "www.google." })
-    const response7 = await request(app).post("/encode").send({ url: "www.google.c" })
-    const response8 = await request(app).post("/encode").send({ url: "http:/www.google.com" })
-    const response9 = await request(app).post("/encode").send({ url: "htp://www.google.com" })
-    const response10 = await request(app).post("/encode").send({ url: "ttp://www.google.com" })
-    const response11 = await request(app).post("/encode").send({ url: "https://google.com" })
-    const response12 = await request(app).post("/encode").send({ url: "htps://www.google.com" })
+    const response1 = await request(app).post("/api/v1/encode").send({ url: "google" })
+    const response2 = await request(app).post("/api/v1/encode").send({ url: "google.com" })
+    const response3 = await request(app).post("/api/v1/encode").send({ url: ".google.com" })
+    const response4 = await request(app).post("/api/v1/encode").send({ url: "ww.google.com" })
+    const response5 = await request(app).post("/api/v1/encode").send({ url: "www.google" })
+    const response6 = await request(app).post("/api/v1/encode").send({ url: "www.google." })
+    const response7 = await request(app).post("/api/v1/encode").send({ url: "www.google.c" })
+    const response8 = await request(app).post("/api/v1/encode").send({ url: "http:/www.google.com" })
+    const response9 = await request(app).post("/api/v1/encode").send({ url: "htp://www.google.com" })
+    const response10 = await request(app).post("/api/v1/encode").send({ url: "ttp://www.google.com" })
+    const response11 = await request(app).post("/api/v1/encode").send({ url: "https://google.com" })
+    const response12 = await request(app).post("/api/v1/encode").send({ url: "htps://www.google.com" })
 
     expect(response1.status).toBe(400);
     expect(response2.status).toBe(400);

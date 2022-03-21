@@ -8,6 +8,8 @@
     "build": "NODE_ENV=prod tsc",
     "dev": "ts-node-dev -r tsconfig-paths/register --poll --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
     "test": "jest",
+    "migrate:dev": "npx prisma migrate dev",
+    "migrate:deploy": "npx prisma migrate deploy",
     "start:prod": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/src/shared/infra/http/server.js"
   },
   "prisma": {

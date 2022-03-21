@@ -3,8 +3,6 @@ import request from "supertest";
 import { app } from "@shared/infra/http/app";
 import { prisma } from "@shared/infra/prisma/prismaClient";
 import { DecodeUrlController } from "./DecodeUrlController";
-import { InvalidUrlToDecodeError } from "@shared/errors/InvalidUrlToDecodeError";
-import { UrlIsRequiredError } from "@shared/errors/UrlIsRequiredError";
 
 describe("Decode Url Controller", () => {
   beforeAll(async () => {
@@ -45,13 +43,13 @@ describe("Decode Url Controller", () => {
   it("should be able to return a decoded url", async () => {
 
     const urlEncoded = await request(app)
-      .post("/encode")
+      .post("/api/v1/encode")
       .send({
         url: "http://www.google.com.br",
       })
 
     const urlDecoded = await request(app)
-      .post("/decode")
+      .post("/api/v1/decode")
       .send({
         url: urlEncoded.body.urlEncoded,
       })
@@ -66,13 +64,13 @@ describe("Decode Url Controller", () => {
   it("should not be able to accept an undefined url", async () => {
 
     const response1 = await request(app)
-      .post("/decode")
+      .post("/api/v1/decode")
       .send({
         url: undefined,
       })
 
     const response2 = await request(app)
-      .post("/decode")
+      .post("/api/v1/decode")
       .send()
 
     expect(response1.status).toBe(400);
@@ -88,18 +86,18 @@ describe("Decode Url Controller", () => {
 
   it("should not be able to accept an invalid url to decode", async () => {
 
-    const response1 = await request(app).post("/decode").send({ url: "http://localhost:3000/123456" })
-    const response2 = await request(app).post("/decode").send({ url: "localhost:3000/12345" })
-    const response3 = await request(app).post("/decode").send({ url: "www.localhost:3000/1234" })
-    const response4 = await request(app).post("/decode").send({ url: "localhost:3000/1234*" })
-    const response5 = await request(app).post("/decode").send({ url: "www" })
-    const response6 = await request(app).post("/decode").send({ url: "http//localhost:3000/abcde" })
-    const response7 = await request(app).post("/decode").send({ url: "https://batata:3000/1" })
-    const response8 = await request(app).post("/decode").send({ url: "http://localhost:3001/1234" })
-    const response9 = await request(app).post("/decode").send({ url: "kkkk/1234" })
-    const response10 = await request(app).post("/decode").send({ url: "www.false/1234" })
-    const response11 = await request(app).post("/decode").send({ url: ".com.com.com/1234" })
-    const response12 = await request(app).post("/decode").send({ url: "http://localhost:3000/" })
+    const response1 = await request(app).post("/api/v1/decode").send({ url: "http://localhost:3000/123456" })
+    const response2 = await request(app).post("/api/v1/decode").send({ url: "localhost:3000/12345" })
+    const response3 = await request(app).post("/api/v1/decode").send({ url: "www.localhost:3000/1234" })
+    const response4 = await request(app).post("/api/v1/decode").send({ url: "localhost:3000/1234*" })
+    const response5 = await request(app).post("/api/v1/decode").send({ url: "www" })
+    const response6 = await request(app).post("/api/v1/decode").send({ url: "http//localhost:3000/abcde" })
+    const response7 = await request(app).post("/api/v1/decode").send({ url: "https://batata:3000/1" })
+    const response8 = await request(app).post("/api/v1/decode").send({ url: "http://localhost:3001/1234" })
+    const response9 = await request(app).post("/api/v1/decode").send({ url: "kkkk/1234" })
+    const response10 = await request(app).post("/api/v1/decode").send({ url: "www.false/1234" })
+    const response11 = await request(app).post("/api/v1/decode").send({ url: ".com.com.com/1234" })
+    const response12 = await request(app).post("/api/v1/decode").send({ url: "http://localhost:3000/" })
 
     expect(response1.status).toBe(400);
     expect(response2.status).toBe(400);
@@ -119,7 +117,7 @@ describe("Decode Url Controller", () => {
 
   it("should be able to throw 404 error when shortened url doesn't exist", async () => {
 
-    const response = await request(app).post("/decode").send({ url: "http://localhost:3000/12345" })
+    const response = await request(app).post("/api/v1/decode").send({ url: "http://localhost:3000/12345" })
 
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty("message");
